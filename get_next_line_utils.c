@@ -6,11 +6,13 @@
 /*   By: abonard <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 16:14:04 by abonard           #+#    #+#             */
-/*   Updated: 2021/12/20 17:25:22 by abonard          ###   ########.fr       */
+/*   Updated: 2022/01/04 17:11:36 by abonard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <unistd.h>
+#include <stdlib.h>
 
 int	strlen_custom(char *ptr)
 {
