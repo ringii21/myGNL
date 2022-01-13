@@ -6,13 +6,11 @@
 /*   By: abonard <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 16:14:04 by abonard           #+#    #+#             */
-/*   Updated: 2022/01/04 17:11:36 by abonard          ###   ########.fr       */
+/*   Updated: 2022/01/11 18:36:50 by abonard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <unistd.h>
-#include <stdlib.h>
 
 int	strlen_custom(char *ptr)
 {
@@ -20,7 +18,7 @@ int	strlen_custom(char *ptr)
 
 	i = 0;
 	if (!ptr)
-		return 0;
+		return (0);
 	while (ptr[i])
 		i++;
 	return (i);
@@ -29,7 +27,7 @@ int	strlen_custom(char *ptr)
 void	ft_copy(char *src, char *dest)
 {
 	int	i;
-	
+
 	i = 0;
 	while (src[i])
 	{
