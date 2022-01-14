@@ -1,15 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   second_get_next_line.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abonard <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/20 14:12:38 by abonard           #+#    #+#             */
-/*   Updated: 2022/01/11 18:15:01 by abonard          ###   ########.fr       */
+/*   Created: 2022/01/14 15:10:22 by abonard           #+#    #+#             */
+/*   Updated: 2022/01/14 16:30:29 by abonard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "get_next_line.h"
 
 char	*concat(char *str, char *buffer)
@@ -17,14 +18,14 @@ char	*concat(char *str, char *buffer)
 	int		guy;
 	char	*new_str;
 	int		lenght_buff;
-	int		n;
+	int		total_lenght;
 
 	guy = strlen_custom(str);
 	lenght_buff = strlen_custom(buffer);
-	n = guy + lenght_buff;
-	if (!n)
+	total_lenght = guy + lenght_buff;
+	if (!total_lenght)
 		return (free(str), NULL);
-	new_str = (char *)malloc(sizeof (char ) * (n + 1));
+	new_str = (char *)malloc(sizeof (char ) * (total_lenght + 1));
 	if (new_str == NULL)
 		return (NULL);
 	if (str)
@@ -39,39 +40,38 @@ char	*ft_input(char *str, char *line)
 	int	i;
 	int	george;
 
-	i = 0;
-	if (!str[i])
+	if (!str)
 		return (NULL);
 	george = 0;
-	i = ft_check(str, '\n');
+	i = ft_check(str, '\n') - 1;
 	if (i == -1)
-		i = strlen_custom(str);
+		i = ft_check(str, '\0') - 1;
 	line = malloc(sizeof(char) * i + 1);
 	if (line == NULL)
 		return (ft_frifri(str));
-	while (george <= i)
+	while (george < i)
 	{
-		line[george] = *(str + george);
+		line[george] = str[george];
 		george++;
 	}
 	line[george] = '\0';
 	return (line);
 }
 
-char	*realloc_thing(char *line, char *str)
+char	*realloc_thing(char *str)
 {
 	char	*new_str;
 	int		lenght_nstr;
-	int		guy;
+	int		lenght_str;
 	int		i;
-	int		lolo;
+	int		temp;
 
 	if (!str)
 		return (NULL);
-	guy = strlen_custom(str);
-	lenght_nstr = strlen_custom(line);
-	lolo = lenght_nstr;
-	lenght_nstr = guy - lenght_nstr;
+	lenght_str = strlen_custom(str);
+	lenght_nstr = ft_check(str, '\n');
+	temp = lenght_nstr;
+	lenght_nstr = lenght_str - lenght_nstr;
 	new_str = malloc(sizeof(char) * lenght_nstr + 1);
 	if (new_str == NULL)
 		return (NULL);
@@ -80,7 +80,7 @@ char	*realloc_thing(char *line, char *str)
 		return (ft_frifri(str));
 	while (i < lenght_nstr)
 	{
-		new_str[i] = str[lolo + i];
+		new_str[i] = str[temp + i];
 		i++;
 	}
 	new_str[i] = '\0';
@@ -104,13 +104,13 @@ char	*get_next_line(int fd)
 		str = concat(str, buff);
 		if (str == NULL)
 			return (ft_frifri(str));
-		if ((ft_check(str, '\n') > 0) || i == 0)
+		if ((ft_check(str, '\n') != -1) || i == 0)
 			break ;
 	}
 	line = ft_input(str, line);
 	if (line == NULL)
 		return (ft_frifri(str));
-	str = realloc_thing(line, str);
+	str = realloc_thing(str);
 	if (str == NULL)
 		return (ft_frifri(line));
 	return (line);
@@ -118,22 +118,21 @@ char	*get_next_line(int fd)
 
 /*
 #include <fcntl.h>
-#include <stdio.h>
 
-int main (int argc, char **argv)
+int main(int ac, char **av)
 {
-	(void)argc;
-
-	int fd = open(argv[1], O_RDONLY);
-	int a = 0;
-	
-	while (a < 150)
+	(void)ac;
+	char *line;
+	int fd = open(av[1], O_RDONLY);
+	int i = 0;
+	while (1)
 	{
-		printf("%s", get_next_line(fd));
-		//printf("%s", get_next_line(fd));
-		//printf("%s", get_next_line(fd));
-	a++;
+		line = get_next_line(fd);
+		if (line == NULL || i == 20)
+			break;
+		printf("line = %s\n", line);
+		free(line);
+		i++;
 	}
-	
 	return (0);
 }*/

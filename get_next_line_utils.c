@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   second_gnl_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abonard <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/20 16:14:04 by abonard           #+#    #+#             */
-/*   Updated: 2022/01/11 18:36:50 by abonard          ###   ########.fr       */
+/*   Created: 2022/01/14 15:10:35 by abonard           #+#    #+#             */
+/*   Updated: 2022/01/14 15:10:59 by abonard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ int	ft_check(char *kurkiputcheck, char c)
 	while (kurkiputcheck[i])
 	{
 		if (kurkiputcheck[i] == c)
+		{
+			i++;
 			return (i);
+		}
 		i++;
 	}
 	return (-1);
