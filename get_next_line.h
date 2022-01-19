@@ -6,7 +6,7 @@
 /*   By: abonard <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 16:07:28 by abonard           #+#    #+#             */
-/*   Updated: 2022/01/18 14:46:37 by abonard          ###   ########.fr       */
+/*   Updated: 2022/01/19 20:36:37 by abonard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int		strlen_custom(char *ptr);
 int		ft_check(char *kurkiputcheck, char c);
 void	ft_copy(char *src, char *dest);
 char	*concat(char *str, char *buffer);
-char	*ft_input(char *str,char *line, int stop);
+char	*ft_input(char *str,char *line);
 char	*realloc_thing_well_shit(char *line, char *str);
-char	*ft_frifri(char *str);
+char	*ft_frifri(char *str, char *s2);
 char	*get_next_line(int fd);
 #endif

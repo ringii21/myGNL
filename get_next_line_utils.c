@@ -6,7 +6,7 @@
 /*   By: abonard <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 15:10:35 by abonard           #+#    #+#             */
-/*   Updated: 2022/01/18 15:40:14 by abonard          ###   ########.fr       */
+/*   Updated: 2022/01/19 19:55:58 by abonard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,13 @@ int	ft_check(char *kurkiputcheck, char c)
 	return (-1);
 }
 
-char	*ft_frifri(char *str)
+char	*ft_frifri(char *str, char *s2)
 {
 	if (str)
 		free(str);
 	str = NULL;
+	if (s2)
+		free(s2);
+	s2 = NULL;
 	return (NULL);
 }
