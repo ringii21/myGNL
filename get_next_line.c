@@ -1,12 +1,12 @@
 /************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   second_get_next_line.c                             :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abonard <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 15:10:22 by abonard           #+#    #+#             */
-/*   Updated: 2022/01/20 00:06:00 by abonard          ###   ########.fr       */
+/*   Updated: 2022/01/20 13:52:07 by abonard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ char	*concat(char *str, char *buffer)
 	if (str)
 		ft_copy(str, new_str);
 	ft_copy(buffer, new_str + len_str);
-	free(str);
+	ft_frifri(str, NULL);
 	return (new_str);
 }
 
-char	*ft_input(char *str, char *line)
+char	*ft_input(char *str, char *line, char *buff)
 {
 	int	i;
 	int	j;
@@ -59,6 +59,7 @@ char	*ft_input(char *str, char *line)
 		j++;
 	}
 	line[j] = '\0';
+	free(buff);
 	return (line);
 }
 
@@ -74,17 +75,15 @@ char	*realloc_thing(char *str)
 		return (ft_frifri(str, NULL));
 	lenght_str = strlen_custom(str);
 	lenght_nstr = ft_check(str, '\n');
+	if (lenght_nstr == -1)
+		lenght_nstr = lenght_str;
 	temp = lenght_nstr;
 	lenght_nstr = lenght_str - lenght_nstr;
 	new_str = malloc(sizeof(char) * lenght_nstr + 1);
 	if (new_str == NULL)
 		return (NULL);
-	if (temp != -1)
-	{
-		while (++i < lenght_nstr)
-			new_str[i] = str[temp + i];
-	}
-	new_str[i] = '\0';
+	while (++i <= lenght_nstr)
+		new_str[i] = str[temp + i];
 	free(str);
 	return (new_str);
 }
@@ -93,12 +92,16 @@ char	*get_next_line(int fd)
 {
 	static char	*str;
 	char		*line;
-	char		buff[BUFFER_SIZE + 1];
+	char		*buff;
 	int			i;
 
 	line = NULL;
+	buff = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, buff, 0) < 0)
 		return (NULL);
+	buff = (char *)malloc(sizeof(char *)* BUFFER_SIZE + 1);
+	if (!buff)
+		return (ft_frifri(buff, NULL));
 	while (1)
 	{
 		i = read(fd, buff, BUFFER_SIZE);
@@ -109,7 +112,7 @@ char	*get_next_line(int fd)
 		if ((ft_check(str, '\n') != -1) || i == 0)
 			break ;
 	}
-	line = ft_input(str, line);
+	line = ft_input(str, line, buff);
 	if (line == NULL)
 		return (ft_frifri(str, NULL));
 	str = realloc_thing(str);
@@ -118,7 +121,7 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-
+/*
 #include <fcntl.h>
 
 int main(int ac, char **av)
@@ -138,4 +141,4 @@ int main(int ac, char **av)
 //	exit(1);
 //	system("leaks a.out");
 	return (0);
-}
+}*/
