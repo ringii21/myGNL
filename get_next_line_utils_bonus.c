@@ -6,11 +6,11 @@
 /*   By: abonard <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 15:10:35 by abonard           #+#    #+#             */
-/*   Updated: 2022/01/20 14:32:51 by abonard          ###   ########.fr       */
+/*   Updated: 2022/01/20 14:14:24 by abonard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int	strlen_custom(char *ptr)
 {

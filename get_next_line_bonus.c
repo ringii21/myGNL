@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abonard <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/20 14:18:43 by abonard           #+#    #+#             */
-/*   Updated: 2022/01/20 14:55:58 by abonard          ###   ########.fr       */
+/*   Created: 2022/01/20 14:18:28 by abonard           #+#    #+#             */
+/*   Updated: 2022/01/20 14:18:32 by abonard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include <stdio.h>
+#include "get_next_line_bonus.h"
 
 char	*concat(char *str, char *buffer)
 {
@@ -88,65 +89,30 @@ char	*realloc_thing(char *str)
 	return (new_str);
 }
 
-int	ft_dowhile(char **str, char **buff, int fd)
-{
-	char	*res;
-	int		i;
-
-	while (1)
-	{
-		i = read(fd, *buff, BUFFER_SIZE);
-		(*buff)[i] = '\0';
-		*str = concat(*str, *buff);
-		if (*str == NULL)
-		{
-			res = ft_frifri(*str, NULL);
-			if (res == NULL)
-				return (0);
-		}
-		if ((ft_check(*str, '\n') != -1) || i == 0)
-			break ;
-	}
-	return (1);
-}
-
-
-char	*ft_verif(char *buff, int fd)
-{
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, buff, 0) < 0)
-		return (NULL);
-	buff = (char *)malloc(sizeof(char *) * BUFFER_SIZE + 1);
-	if (!buff)
-		return (ft_frifri(buff, NULL));
-	return (buff);
-
-}
 char	*get_next_line(int fd)
 {
 	static char	*str;
 	char		*line;
 	char		*buff;
-//	int			i;
+	int			i;
 
 	line = NULL;
 	buff = NULL;
-	buff = ft_verif(buff, fd);
-	if (buff == NULL)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, buff, 0) < 0)
 		return (NULL);
-	/*while (1)
+	buff = (char *)malloc(sizeof(char *) * BUFFER_SIZE + 1);
+	if (!buff)
+		return (ft_frifri(buff, NULL));
+	while (1)
 	{
 		i = read(fd, buff, BUFFER_SIZE);
-		if (i < 0)
-			return (NULL);
 		buff[i] = '\0';
 		str = concat(str, buff);
 		if (str == NULL)
 			return (ft_frifri(str, NULL));
 		if ((ft_check(str, '\n') != -1) || i == 0)
 			break ;
-	}*/
-	if (ft_dowhile(&str, &buff, fd) == 0)
-		return (NULL);
+	}
 	line = ft_input(str, line, buff);
 	if (line == NULL)
 		return (ft_frifri(str, NULL));
@@ -158,7 +124,7 @@ char	*get_next_line(int fd)
 
 /*
 #include <fcntl.h>
-#include <stdio.h>
+
 int main(int ac, char **av)
 {
 	(void)ac;
