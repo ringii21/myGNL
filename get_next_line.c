@@ -6,7 +6,7 @@
 /*   By: abonard <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 14:18:43 by abonard           #+#    #+#             */
-/*   Updated: 2022/01/20 14:55:58 by abonard          ###   ########.fr       */
+/*   Updated: 2022/01/25 14:25:14 by abonard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,41 +110,17 @@ int	ft_dowhile(char **str, char **buff, int fd)
 	return (1);
 }
 
-
-char	*ft_verif(char *buff, int fd)
-{
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, buff, 0) < 0)
-		return (NULL);
-	buff = (char *)malloc(sizeof(char *) * BUFFER_SIZE + 1);
-	if (!buff)
-		return (ft_frifri(buff, NULL));
-	return (buff);
-
-}
 char	*get_next_line(int fd)
 {
 	static char	*str;
 	char		*line;
 	char		*buff;
-//	int			i;
 
 	line = NULL;
 	buff = NULL;
 	buff = ft_verif(buff, fd);
 	if (buff == NULL)
 		return (NULL);
-	/*while (1)
-	{
-		i = read(fd, buff, BUFFER_SIZE);
-		if (i < 0)
-			return (NULL);
-		buff[i] = '\0';
-		str = concat(str, buff);
-		if (str == NULL)
-			return (ft_frifri(str, NULL));
-		if ((ft_check(str, '\n') != -1) || i == 0)
-			break ;
-	}*/
 	if (ft_dowhile(&str, &buff, fd) == 0)
 		return (NULL);
 	line = ft_input(str, line, buff);
@@ -155,25 +131,3 @@ char	*get_next_line(int fd)
 		return (ft_frifri(line, NULL));
 	return (line);
 }
-
-/*
-#include <fcntl.h>
-#include <stdio.h>
-int main(int ac, char **av)
-{
-	(void)ac;
-	char *line;
-	int fd = open(av[1], O_RDONLY);
-
-	while ((line = get_next_line(fd)) != NULL)
-	{
-		printf("%s", line);
-		free(line);
-	}
-	free(line);
-	//while (1)
-	//	;
-//	exit(1);
-//	system("leaks a.out");
-	return (0);
-}*/

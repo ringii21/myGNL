@@ -5,12 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: abonard <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/20 14:18:28 by abonard           #+#    #+#             */
-/*   Updated: 2022/01/20 14:18:32 by abonard          ###   ########.fr       */
+/*   Created: 2022/01/20 14:18:43 by abonard           #+#    #+#             */
+/*   Updated: 2022/01/25 14:33:51 by abonard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "get_next_line_bonus.h"
 
 char	*concat(char *str, char *buffer)
@@ -89,30 +88,41 @@ char	*realloc_thing(char *str)
 	return (new_str);
 }
 
+int	ft_dowhile(char **str, char **buff, int fd)
+{
+	char	*res;
+	int		i;
+
+	while (1)
+	{
+		i = read(fd, *buff, BUFFER_SIZE);
+		(*buff)[i] = '\0';
+		*str = concat(*str, *buff);
+		if (*str == NULL)
+		{
+			res = ft_frifri(*str, NULL);
+			if (res == NULL)
+				return (0);
+		}
+		if ((ft_check(*str, '\n') != -1) || i == 0)
+			break ;
+	}
+	return (1);
+}
+
 char	*get_next_line(int fd)
 {
 	static char	*str;
 	char		*line;
 	char		*buff;
-	int			i;
 
 	line = NULL;
 	buff = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, buff, 0) < 0)
+	buff = ft_verif(buff, fd);
+	if (buff == NULL)
 		return (NULL);
-	buff = (char *)malloc(sizeof(char *) * BUFFER_SIZE + 1);
-	if (!buff)
-		return (ft_frifri(buff, NULL));
-	while (1)
-	{
-		i = read(fd, buff, BUFFER_SIZE);
-		buff[i] = '\0';
-		str = concat(str, buff);
-		if (str == NULL)
-			return (ft_frifri(str, NULL));
-		if ((ft_check(str, '\n') != -1) || i == 0)
-			break ;
-	}
+	if (ft_dowhile(&str, &buff, fd) == 0)
+		return (NULL);
 	line = ft_input(str, line, buff);
 	if (line == NULL)
 		return (ft_frifri(str, NULL));
@@ -121,25 +131,3 @@ char	*get_next_line(int fd)
 		return (ft_frifri(line, NULL));
 	return (line);
 }
-
-/*
-#include <fcntl.h>
-
-int main(int ac, char **av)
-{
-	(void)ac;
-	char *line;
-	int fd = open(av[1], O_RDONLY);
-
-	while ((line = get_next_line(fd)) != NULL)
-	{
-		printf("%s", line);
-		free(line);
-	}
-	free(line);
-	//while (1)
-	//	;
-//	exit(1);
-//	system("leaks a.out");
-	return (0);
-}*/

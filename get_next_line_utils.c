@@ -6,7 +6,7 @@
 /*   By: abonard <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 15:10:35 by abonard           #+#    #+#             */
-/*   Updated: 2022/01/20 14:32:51 by abonard          ###   ########.fr       */
+/*   Updated: 2022/01/25 14:32:33 by abonard          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,16 @@ int	ft_check(char *kurkiputcheck, char c)
 		i++;
 	}
 	return (-1);
+}
+
+char	*ft_verif(char *buff, int fd)
+{
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, buff, 0) < 0)
+		return (NULL);
+	buff = (char *)malloc(sizeof(char *) * BUFFER_SIZE + 1);
+	if (!buff)
+		return (ft_frifri(buff, NULL));
+	return (buff);
 }
 
 char	*ft_frifri(char *str, char *s2)
